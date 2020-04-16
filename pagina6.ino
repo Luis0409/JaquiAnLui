@@ -165,13 +165,7 @@ void loop() {
    Serial.println("cm");
    delay(500);
 
-   if(distancia<10){
-    if(distancia>1){
-      digitalWrite(buzzer, HIGH);
-    }
-  }else{
-    digitalWrite(buzzer, LOW);
-  }
+   
    /*
     * Termina Sensor proximidad
    */
@@ -201,8 +195,7 @@ void loop() {
       digitalWrite(18,LOW);
       digitalWrite(19,LOW);
     }
-    delay(500);
-  
+    delay(500);  
 
   Firebase.getFloat(firebaseData, ruta + "/sensorTemperatura/temperatura");
   float temp = firebaseData.floatData();
@@ -221,7 +214,16 @@ void loop() {
   Firebase.getInt(firebaseData, ruta + "/sensorProximidad/distancia");
   int dis = firebaseData.floatData();
   String dis2 = (String) dis;
-  
+
+  //Inicia control de dispositivo en la nube
+    if(dis<10){
+      if(dis>1){
+        digitalWrite(buzzer, HIGH);
+      }
+    }else{
+      digitalWrite(buzzer, LOW);
+    } 
+   //Termina control de dispositivo en la nube
 
    //----------------------------------------------
    //--------------Streaming de datos--------------
